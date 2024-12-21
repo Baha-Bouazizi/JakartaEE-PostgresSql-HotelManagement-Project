@@ -1,53 +1,31 @@
 package com.example.proj;
 
-import com.example.proj.utils.DatabaseConnection;
-
+import com.example.proj.Models.Hotel;
+import com.example.proj.dao.HotelDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.*;
-import java.sql.Connection;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
+@WebServlet("/home")
 public class HelloServlet extends HttpServlet {
-    private String message;
-
-    public void init() {
-        message = "Hello World!";
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-
-        // Test Database Connection
-        try (Connection conn = DatabaseConnection.getInstance()) {
-            if (conn != null) {
-                Statement stmt = conn.createStatement();
-                String query = "SELECT 'Connection Successful' AS status";
-                var rs = stmt.executeQuery(query);
-
-                while (rs.next()) {
-                    out.println("<p>" + rs.getString("status") + "</p>");
-                }
-            } else {
-                out.println("<p>Connection is null.</p>");
-            }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HotelDao hotelDao = new HotelDao();
+        try {
+            // Fetch all hotels from the database
+            List<Hotel> hotels = hotelDao.getHotels();
+            request.setAttribute("hotels", hotels);
         } catch (SQLException e) {
-            out.println("<p>Database connection failed: " + e.getMessage() + "</p>");
-            e.printStackTrace();
+            throw new RuntimeException("Error fetching hotels: " + e.getMessage());
         }
 
-        out.println("</body></html>");
-    }
-
-    public void destroy() {
+        // Forward the request to the home JSP
+        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 }

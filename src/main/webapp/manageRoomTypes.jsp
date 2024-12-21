@@ -49,10 +49,6 @@
       <label for="capacity" class="form-label">Capacity</label>
       <input type="number" class="form-control" id="capacity" name="capacity" required>
     </div>
-    <div class="mb-3">
-      <label for="price" class="form-label">Price</label>
-      <input type="number" step="0.01" class="form-control" id="price" name="price" required>
-    </div>
     <button type="submit" class="btn btn-primary">Add Room Type</button>
   </form>
 
@@ -65,7 +61,6 @@
     <tr>
       <th>Label</th>
       <th>Capacity</th>
-      <th>Price</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -79,7 +74,6 @@
     <tr id="roomType_<%= roomType.getId() %>">
       <td id="label_<%= roomType.getId() %>"><%= roomType.getLabel() %></td>
       <td id="capacity_<%= roomType.getId() %>"><%= roomType.getCapacity() %></td>
-      <td id="price_<%= roomType.getId() %>"><%= roomType.getPrice() %></td>
       <td>
         <!-- Edit button that shows the form in place -->
         <button onclick="editRoomType(<%= roomType.getId() %>);" class="btn btn-warning btn-sm">Edit</button>
@@ -87,7 +81,7 @@
         <form action="/Proj_war_exploded/manageRoomTypes" method="POST" style="display:inline;">
           <input type="hidden" name="id" value="<%= roomType.getId() %>">  <!-- Ensure the ID is passed -->
           <button type="submit" class="btn btn-danger btn-sm" name="_method" value="DELETE">Delete</button>
-        </form
+        </form>
       </td>
     </tr>
     <tr id="editRow_<%= roomType.getId() %>" style="display:none;">
@@ -95,7 +89,6 @@
         <input type="hidden" name="id" value="<%= roomType.getId() %>">
         <td><input type="text" name="label" value="<%= roomType.getLabel() %>" class="form-control" required></td>
         <td><input type="number" name="capacity" value="<%= roomType.getCapacity() %>" class="form-control" required></td>
-        <td><input type="number" name="price" value="<%= roomType.getPrice() %>" class="form-control" required></td>
         <td><button type="submit" class="btn btn-success btn-sm">Save</button></td>
       </form>
     </tr>

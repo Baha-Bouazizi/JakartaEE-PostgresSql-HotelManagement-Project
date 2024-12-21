@@ -4,14 +4,12 @@ public class RoomType {
     private int id;
     private String label;
     private int capacity;
-    private double price;  // Changed from int to double for fractional prices
 
     // Constructor
-    public RoomType(int id, String label, int capacity, double price) {
+    public RoomType(int id, String label, int capacity) {
         this.id = id;
         this.label = label;
         this.capacity = capacity;
-        this.price = price;
     }
 
     // Getters and Setters
@@ -37,13 +35,5 @@ public class RoomType {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

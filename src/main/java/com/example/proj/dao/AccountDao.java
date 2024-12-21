@@ -78,21 +78,27 @@ public class AccountDao {
     public boolean validateRole(String role) {
         return role.equals("admin") || role.equals("agent") || role.equals("client");
     }
-    public String validateLoginAndGetRole(String username, String password) throws SQLException, NoSuchAlgorithmException {
-        String query = "SELECT password, role FROM Account WHERE username = ?";
+    public List<String> validateLoginAndGetRoleAndId(String username, String password) throws SQLException, NoSuchAlgorithmException {
+        List<String> x = new ArrayList<>();
+        String query = "SELECT password, role, id FROM Account WHERE username = ?";
         try (Connection conn = DatabaseConnection.getInstance();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String storedPasswordHash = rs.getString("password");
-                if (storedPasswordHash.equals(Account.hashPassword(password))) {
-                    return rs.getString("role");  // Return the role if password matches
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String storedPasswordHash = rs.getString("password");
+                    // Use a safe password comparison
+                    if (Account.hashPassword(password).equals(storedPasswordHash)) {
+                        x.add(rs.getString("role"));
+                        x.add(rs.getString("id"));
+                        return x;  // Return the role and id if password matches
+                    }
                 }
             }
         }
         return null;  // Return null if the credentials are invalid
     }
+
     public Account getAgentByUsername(String username) throws SQLException {
         String query = "SELECT * FROM Account WHERE username = ?";
         try (Connection conn = DatabaseConnection.getInstance();

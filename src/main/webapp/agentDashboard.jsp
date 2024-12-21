@@ -7,9 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agent Dashboard</title>
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Google Font (Poppins) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -132,6 +130,8 @@
       <p>Total Room Types</p>
     </div>
   </div>
+
+  <!-- Search Form -->
   <form method="get" action="/Proj_war_exploded/agentDashboard" class="my-4">
     <div class="row">
       <div class="col-md-3">
@@ -151,7 +151,7 @@
   </form>
 
   <!-- Hotel Cards -->
-  <dgiv class="hotel-cards row">
+  <div class="hotel-cards row">
     <%
       List<Hotel> hotels = (List<Hotel>) request.getAttribute("hotels");
       if (hotels == null || hotels.isEmpty()) {
@@ -178,6 +178,7 @@
             %>
           </div>
           <p class="card-text"><%= hotel.getDescription() %></p>
+          <a href="<%= request.getContextPath() + "/showHotelDetails?id=" + hotel.getId() %>" class="btn btn-info btn-sm">View Details</a>
         </div>
       </div>
     </div>
@@ -185,7 +186,7 @@
         }
       }
     %>
-  </dgiv>
+  </div>
 </div>
 
 <!-- Bootstrap Bundle JS -->

@@ -22,8 +22,7 @@ public class RoomTypeDao {
                 RoomType roomType = new RoomType(
                         rs.getInt("id"),
                         rs.getString("label"),
-                        rs.getInt("capacity"),
-                        rs.getDouble("prix")  // Changed to double for price
+                        rs.getInt("capacity")
                 );
                 roomTypes.add(roomType);
             }
@@ -34,14 +33,13 @@ public class RoomTypeDao {
 
     // Method to add a new room type
     public void addRoomType(RoomType roomType) throws SQLException {
-        String query = "INSERT INTO RoomType (label, capacity, prix) VALUES (?, ?, ?)";
+        String query = "INSERT INTO RoomType (label, capacity) VALUES (?, ?)";
 
         try (Connection conn = DatabaseConnection.getInstance();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, roomType.getLabel());
             stmt.setInt(2, roomType.getCapacity());
-            stmt.setDouble(3, roomType.getPrice());  // Using setDouble for price
             stmt.executeUpdate();
         }
     }
@@ -61,8 +59,7 @@ public class RoomTypeDao {
                 roomType = new RoomType(
                         rs.getInt("id"),
                         rs.getString("label"),
-                        rs.getInt("capacity"),
-                        rs.getDouble("prix")  // Using getDouble for price
+                        rs.getInt("capacity")
                 );
             }
         }
@@ -72,15 +69,14 @@ public class RoomTypeDao {
 
     // Method to update an existing room type
     public void updateRoomType(RoomType roomType) throws SQLException {
-        String query = "UPDATE RoomType SET label = ?, capacity = ?, prix = ? WHERE id = ?";
+        String query = "UPDATE RoomType SET label = ?, capacity = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getInstance();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, roomType.getLabel());
             stmt.setInt(2, roomType.getCapacity());
-            stmt.setDouble(3, roomType.getPrice());  // Using setDouble for price
-            stmt.setInt(4, roomType.getId());
+            stmt.setInt(3, roomType.getId());
             stmt.executeUpdate();
         }
     }
@@ -97,7 +93,7 @@ public class RoomTypeDao {
         }
     }
     public int getRoomTypeCount() throws SQLException {
-        String query = "SELECT COUNT(*) AS count FROM RoomType";
+        String query = "SELECT COUNT(*) AS count FROM Roomtype";
         try (Connection conn = DatabaseConnection.getInstance();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {

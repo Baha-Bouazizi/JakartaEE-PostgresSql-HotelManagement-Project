@@ -72,6 +72,14 @@
           <% } %>
         </select>
       </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" required>
+      </div>
       <button type="submit" class="btn btn-primary btn-custom">
         <i class="fas fa-plus-circle"></i> Add Link
       </button>
@@ -86,6 +94,8 @@
       <tr>
         <th>Hotel</th>
         <th>Room Type</th>
+        <th>Price</th>
+        <th>Quantity</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -111,6 +121,8 @@
       <tr>
         <td><%= hotelName %></td>
         <td><%= roomTypeName %></td>
+        <td><%= hrt.getPrice() %></td>
+        <td><%= hrt.getQuantity() %></td>
         <td>
           <form action="/Proj_war_exploded/manageHotelRoomTypes" method="POST" style="display:inline;">
             <input type="hidden" name="_method" value="DELETE">

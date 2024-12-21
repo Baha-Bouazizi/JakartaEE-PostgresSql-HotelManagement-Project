@@ -63,9 +63,9 @@ public class RoomTypeController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id") != null ? request.getParameter("id") : "0");
             String label = request.getParameter("label");
             int capacity = Integer.parseInt(request.getParameter("capacity"));
-            double price = Double.parseDouble(request.getParameter("price"));
 
-            RoomType roomType = new RoomType(id, label, capacity, price);
+            RoomType roomType = new RoomType(id, label, capacity);
+
             RoomTypeDao roomTypeDao = new RoomTypeDao();
 
             try {
