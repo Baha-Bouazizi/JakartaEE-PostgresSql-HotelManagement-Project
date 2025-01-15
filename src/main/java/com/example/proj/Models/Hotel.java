@@ -1,6 +1,6 @@
 package com.example.proj.Models;
 
-public class Hotel implements serializable{
+public class Hotel {
     private int id;
     private String name;
     private String city;
